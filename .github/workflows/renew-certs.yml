@@ -45,7 +45,7 @@ jobs:
       - name: Install dependencies
         run: |
           pip install certbot certbot-dns-cloudflare
-          yarn install --frozen-lockfile
+          yarn install --immutable
 
       - name: Run CertBot
         run: |
