@@ -1,0 +1,20 @@
+{
+  "name": "@spklai/automations",
+  "packageManager": "yarn@3.6.3",
+  "scripts": {
+    "certbot": "yarn with-env ts-node --project src/tsconfig.json src/certbot.ts",
+    "with-env": "env-cmd --silent -f .env"
+  },
+  "devDependencies": {
+    "@types/fs-extra": "^11.0.1",
+    "@types/node": "^20.5.9",
+    "env-cmd": "^10.1.0",
+    "ts-node": "^10.9.1",
+    "typescript": "^5.2.2"
+  },
+  "dependencies": {
+    "@upstash/redis": "^1.22.0",
+    "fs-extra": "^11.1.1",
+    "tslib": "^2.6.2"
+  }
+}

@@ -1,0 +1,49 @@
+name: Renew Certs
+
+on:
+  schedule:
+    - cron: '0 5 */31 * *'
+  workflow_dispatch:
+
+jobs:
+  renew:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+
+      - name: Install Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: 18
+
+      - name: Install latest Yarn
+        run: |
+          corepack prepare yarn@stable --activate
+          yarn set version stable
+          yarn --version
+
+      - uses: actions/cache@v3
+        name: Setup yarn cache
+        with:
+          path: ${{ steps.yarn-cache.outputs.YARN_CACHE_PATH }}
+          key: ${{ runner.os }}-yarn-cache-${{ hashFiles('**/yarn.lock', '.yarnrc.yml') }}
+          restore-keys: |
+            ${{ runner.os }}-yarn-cache-
+
+      - name: Install dependencies
+        run: |
+          apt install -y certbot openssl python3-certbot-dns-cloudflare
+          yarn install --frozen-lockfile
+
+      - name: Run CertBot
+        run: |
+          yarn run certbot
+        env:
+          CLOUDFLARE_EMAIL: ${{ secrets.CLOUDFLARE_EMAIL }}
+          CLOUDFLARE_API_KEY: ${{ secrets.CLOUDFLARE_API_KEY }}
+          CERTBOT_DOMAINS: ${{ secrets.CERTBOT_DOMAINS }}
+          CERTBOT_EMAIL: ${{ secrets.CERTBOT_EMAIL }}
+          UPSTASH_REDIS_URL: ${{ secrets.UPSTASH_REDIS_URL }}
+          UPSTASH_REDIS_TOKEN: ${{ secrets.UPSTASH_REDIS_TOKEN }}
