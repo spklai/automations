@@ -40,7 +40,7 @@ jobs:
 
       - name: Install dependencies
         run: |
-          apt install -y certbot openssl python3-certbot-dns-cloudflare
+          sudo apt install -y certbot openssl python3-certbot-dns-cloudflare
           yarn install --frozen-lockfile
 
       - name: Run CertBot
