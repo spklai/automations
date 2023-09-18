@@ -6,7 +6,7 @@ on:
   workflow_dispatch:
 
 jobs:
-  renew:
+  clean:
     runs-on: ubuntu-latest
 
     steps:
