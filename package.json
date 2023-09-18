@@ -3,6 +3,7 @@
   "packageManager": "yarn@3.6.3",
   "scripts": {
     "certbot": "yarn with-env ts-node --project src/tsconfig.json src/certbot.ts",
+    "clean-do-registry": "yarn with-env ts-node --project src/tsconfig.json src/clean-do-registry.ts",
     "with-env": "env-cmd --silent -f .env"
   },
   "devDependencies": {
@@ -14,6 +15,7 @@
   },
   "dependencies": {
     "@upstash/redis": "^1.22.0",
+    "dots-wrapper": "^3.11.2",
     "fs-extra": "^11.1.1",
     "tslib": "^2.6.2"
   }

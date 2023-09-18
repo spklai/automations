@@ -42,6 +42,7 @@
     "CERTBOT",
     "certonly",
     "corepack",
+    "doctl",
     "fullchain",
     "privkey",
     "upstash"

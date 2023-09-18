@@ -1,4 +1,3 @@
-import ChildProcess from 'child_process';
 import Path from 'path';
 import FS from 'fs-extra';
 import {
@@ -8,6 +7,7 @@ import {
   CERTBOT_LOGS_DIR,
 } from './common/paths';
 import { redis } from './common/redis';
+import { exec } from './common/exec';
 
 const CLOUDFLARE_EMAIL = process.env.CLOUDFLARE_EMAIL;
 const CLOUDFLARE_API_KEY = process.env.CLOUDFLARE_API_KEY;
@@ -55,21 +55,6 @@ main().catch(err => {
   console.error(err);
   process.exit(1);
 });
-
-async function exec(command: string): Promise<void> {
-  const childProcess = ChildProcess.exec(command);
-  childProcess.stdout?.pipe(process.stdout);
-  childProcess.stderr?.pipe(process.stderr);
-  await new Promise((resolve, reject) => {
-    childProcess.on('close', code => {
-      if (code === 0) {
-        resolve(undefined);
-      } else {
-        reject(new Error(`Command failed with code ${code}`));
-      }
-    });
-  });
-}
 
 async function uploadCerts(
   certName: string,
