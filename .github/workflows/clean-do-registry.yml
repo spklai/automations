@@ -2,7 +2,8 @@ name: Clean DO Registry
 
 on:
   schedule:
-    - cron: '0 3 * * *'
+    # Cron job @ 3am PST
+    - cron: '0 10 * * *' # in UTC
   workflow_dispatch:
 
 jobs:
